@@ -11,6 +11,7 @@ export async function GET(request, { params }) {
     .from('orders')
     .select('*')
     .eq('id', id)
+    .eq('user_id', user.id) // the service client bypasses RLS, so check ownership here
     .maybeSingle();
 
   if (!order) return json({ error: 'Order not found' }, { status: 404 });
