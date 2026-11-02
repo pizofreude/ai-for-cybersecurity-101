@@ -40,6 +40,7 @@ Row-level security policies live in `emulator/policies.mjs`. Each one names the 
 | `npm run dev` | Start the emulator and Next.js |
 | `npm run reset` | Restore seed data. Keys stay the same |
 | `npm run reset -- --rotate-keys` | Restore seed data and generate new keys |
+| `npm run reset -- --code` | Restore seed data and the lab code, so every flag is open again. Your edits go to `git stash` first: `git stash pop` brings them back |
 | `npm run check` | Run every exploit and report which flags are open |
 | `npm run check -- --expect fixed` | Check every flag is closed and the normal feature still works |
 

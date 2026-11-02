@@ -1,6 +1,9 @@
 // One command to rebuild the lab: keys in .env.local, schema, and seed data.
-//   npm run reset                 restore seed data, keep keys
-//   npm run reset -- --rotate-keys  also generate new keys
+//   npm run reset                    restore seed data, keep keys
+//   npm run reset -- --rotate-keys   also generate new keys
+//   npm run reset -- --code          also restore the lab code (and every flag) to the last commit.
+//                                    Your changes are saved with git stash first: get them back with git stash pop.
+import { execFileSync } from 'node:child_process';
 import { randomBytes, scryptSync } from 'node:crypto';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
@@ -53,6 +56,19 @@ function insertAll(db, table, rows) {
     db.prepare(`INSERT INTO ${table} (${cols.join(', ')}) VALUES (${cols.map(() => '?').join(', ')})`).run(...Object.values(row));
   }
 }
+
+function restoreCode() {
+  const git = (...gitArgs) => execFileSync('git', gitArgs, { cwd: labRoot, encoding: 'utf8' }).trim();
+  if (!git('status', '--porcelain', '--', '.')) {
+    console.log('Lab code already matches the last commit.');
+    return;
+  }
+  git('stash', 'push', '--include-untracked', '-m', `lab work saved by npm run reset ${new Date().toISOString()}`, '--', '.');
+  console.log('Lab code restored. Your changes are in git stash: run "git stash pop" to get them back.');
+  console.log('Restart npm run dev so the emulator reloads its policies.');
+}
+
+if (args.has('--code')) restoreCode();
 
 const previous = readEnv();
 if (args.has('--rotate-keys') || !previous.SUPABASE_JWT_SECRET) {
