@@ -10,6 +10,8 @@ Files you copy into your own repository so your coding agent works inside securi
 | [cursor/cursorignore](cursor/cursorignore) | Lines merged into your `.cursorignore` |
 | [cursor/security.mdc.header](cursor/security.mdc.header) | Front matter for the always-on Cursor rule built from the rules file |
 | [codex/AGENTS.section.md](codex/AGENTS.section.md) | Section appended to your `AGENTS.md`, followed by the rules |
+| [security-review.md](security-review.md) | Pre-commit security review prompt for any agent, installed as `.agent-kit/security-review.md` |
+| [claude/commands/ship-review.md](claude/commands/ship-review.md) | The same review as a Claude Code `/ship-review` command |
 | [install.sh](install.sh) | Copies or merges the files above into your repository without overwriting anything |
 
 ## What the deny list does and does not do

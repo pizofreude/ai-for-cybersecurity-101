@@ -58,6 +58,7 @@ append_block_once() { # marker dest blockfile
 
 echo "Installing the agent security kit into $TARGET"
 copy_once "$KIT/SECURITY-RULES.md" "$TARGET/SECURITY-RULES.md"
+copy_once "$KIT/security-review.md" "$TARGET/.agent-kit/security-review.md"
 
 if [ "$AGENT" = claude ] || [ "$AGENT" = all ]; then
   echo "Claude Code:"
@@ -67,6 +68,7 @@ if [ "$AGENT" = claude ] || [ "$AGENT" = all ]; then
     copy_once "$KIT/claude/settings.json" "$TARGET/.claude/settings.json"
   fi
   append_block_once "@SECURITY-RULES.md" "$TARGET/CLAUDE.md" "$KIT/claude/CLAUDE.md"
+  copy_once "$KIT/claude/commands/ship-review.md" "$TARGET/.claude/commands/ship-review.md"
 fi
 
 if [ "$AGENT" = cursor ] || [ "$AGENT" = all ]; then
