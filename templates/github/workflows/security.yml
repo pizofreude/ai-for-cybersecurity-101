@@ -1,0 +1,83 @@
+# Security gate for an AI-built web app. Copy to .github/workflows/security.yml in your repository.
+# Runs on every push and pull request, and weekly so new vulnerabilities in old code still surface.
+#
+# Every third-party action is pinned to a full commit SHA, because a tag can be moved to malicious code.
+# Dependabot (templates/github/dependabot.yml) opens pull requests to update these pins.
+#
+# If your app lives in a subdirectory, set APP_DIR below (for example: web).
+
+name: security
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 1 * * 1' # Mondays 01:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  APP_DIR: .
+  GITLEAKS_VERSION: 8.30.1
+
+jobs:
+  secrets:
+    name: gitleaks (full history)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Install gitleaks (checksum checked)
+        run: |
+          base="https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}"
+          file="gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          curl -sSfLO "$base/$file"
+          curl -sSfL "$base/gitleaks_${GITLEAKS_VERSION}_checksums.txt" | grep " $file\$" | sha256sum -c -
+          tar -xzf "$file" gitleaks
+      - name: Scan every commit
+        run: ./gitleaks git --redact --verbose --exit-code 1
+
+  dependencies:
+    name: npm audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        if: hashFiles(format('{0}/package-lock.json', env.APP_DIR)) != ''
+        with:
+          node-version: 24
+      - name: Fail on high or critical advisories in production dependencies
+        if: hashFiles(format('{0}/package-lock.json', env.APP_DIR)) != ''
+        working-directory: ${{ env.APP_DIR }}
+        run: npm audit --omit=dev --audit-level=high
+
+  osv:
+    name: OSV-Scanner (all lockfiles)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: google/osv-scanner-action/osv-scanner-action@b1d267aea5211fa648d9d442fa64b90dbdcbdd36 # v2.7.0
+        with:
+          scan-args: |-
+            --recursive
+            ./
+
+  code:
+    name: Semgrep (code patterns)
+    runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep:1.183.0
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Fail on findings from the default ruleset
+        run: semgrep scan --config p/default --error --metrics off
