@@ -20,8 +20,8 @@ export default async function Product({ params }) {
       {(comments ?? []).map((comment) => (
         <div key={comment.id} className="card">
           <strong>{comment.author_name}</strong>
-          {/* Render reviews as HTML so customers can use bold text and links. */}
-          <div dangerouslySetInnerHTML={{ __html: comment.body }} />
+          {/* React escapes text, so a review can never become live HTML. */}
+          <p className="pre">{comment.body}</p>
         </div>
       ))}
       <CommentForm productId={product.id} />

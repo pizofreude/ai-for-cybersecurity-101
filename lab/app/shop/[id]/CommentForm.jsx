@@ -23,7 +23,7 @@ export default function CommentForm({ productId }) {
 
   return (
     <form onSubmit={onSubmit} className="stack">
-      <textarea name="body" rows={3} placeholder="Write a review. HTML like <b>bold</b> is allowed." required />
+      <textarea name="body" rows={3} placeholder="Write a review" required />
       <button type="submit">Post review</button>
       {error && <p className="error">{error}</p>}
     </form>
