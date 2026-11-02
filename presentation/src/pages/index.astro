@@ -1,0 +1,64 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import contract from "../content/presentation-contract.json";
+
+const { course, slides } = contract;
+---
+
+<BaseLayout
+  title={`${course} - visual aid`}
+  description="Trainer visual aid for AI for Cybersecurity 101: secrets, OWASP Top 10:2025, AI attack surfaces, and a ship gate."
+>
+  <nav class="rail" aria-label="Sections">
+    {slides.map((slide) => (
+      <a href={`#${slide.id}`} data-nav={slide.id} title={slide.label}>{slide.nav}</a>
+    ))}
+  </nav>
+
+  <main>
+    {slides.map((slide) => (
+      <section id={slide.id} class:list={["slide", { "slide--break": slide.id === "break" }]} aria-labelledby={`${slide.id}-title`}>
+        <p class="meta">
+          <span>{slide.nav === "BR" ? "BREAK" : `CH${Number(slide.nav) || 1}`}</span>
+          <span>{slide.time}</span>
+          {slide.durationMinutes > 0 && <span>{slide.durationMinutes} MIN</span>}
+        </p>
+        <h1 id={`${slide.id}-title`}>{slide.title}</h1>
+        <p class="objective">{slide.objective}</p>
+
+        <div class="grid">
+          <ul class="points">
+            {slide.points.map((point) => <li>{point}</li>)}
+          </ul>
+
+          {(slide.prompts.length > 0 || slide.commands.length > 0) && (
+            <div class="blocks">
+              {slide.prompts.map((prompt) => (
+                <figure class="prompt">
+                  <figcaption>PROMPT / {prompt.label}</figcaption>
+                  <p>{prompt.text}</p>
+                </figure>
+              ))}
+              {slide.commands.length > 0 && (
+                <figure class="terminal">
+                  <figcaption>TERMINAL</figcaption>
+                  <pre>{slide.commands.map((command) => <code>{`$ ${command}`}</code>)}</pre>
+                </figure>
+              )}
+            </div>
+          )}
+        </div>
+
+        <p class="cue"><span>NEXT</span> {slide.cue}</p>
+
+        {slide.sources.length > 0 && (
+          <ul class="sources" aria-label="Sources">
+            {slide.sources.map((source) => (
+              <li><a href={source.href} rel="noopener noreferrer">{source.label}</a></li>
+            ))}
+          </ul>
+        )}
+      </section>
+    ))}
+  </main>
+</BaseLayout>
