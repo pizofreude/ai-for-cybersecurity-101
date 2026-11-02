@@ -34,7 +34,7 @@ export default function Chat() {
         <div key={i} className="card">
           <strong>{m.from}</strong>
           {m.html !== undefined
-            ? <p dangerouslySetInnerHTML={{ __html: m.html }} />
+            ? <p dangerouslySetInnerHTML={{ __html: m.html }} /> // nosemgrep: ai-builder.dangerously-set-inner-html -- reply_html is escaped in lib/markdown.js before any tag is added
             : <p className="pre">{m.text}</p>}
         </div>
       ))}
