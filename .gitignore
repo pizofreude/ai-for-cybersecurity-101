@@ -1,0 +1,38 @@
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.envrc
+.infisical.json
+
+# Supabase local state
+supabase/.branches/
+supabase/.temp/
+
+# Node / Next.js / Astro
+node_modules/
+.next/
+out/
+.astro/
+dist/
+.netlify/
+.vercel/
+*.tsbuildinfo
+next-env.d.ts
+
+# Logs and test output
+*.log
+npm-debug.log*
+coverage/
+playwright-report/
+test-results/
+
+# Gitleaks reports
+gitleaks-report.*
+
+# OS and editor
+.DS_Store
+Thumbs.db
+.idea/
