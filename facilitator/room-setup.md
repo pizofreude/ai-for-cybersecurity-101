@@ -27,7 +27,7 @@ One helper per 12 students. Helpers know the lab loop and have run every card on
 - [ ] Second screen or tablet for the speaker notes PDF.
 - [ ] Trainer laptop: fresh clone of the course repository, `npm ci` done in `lab/`, `npm run check` passes.
 - [ ] Trainer laptop: `lab-fixed` branch fetched, so `git diff main lab-fixed -- lab/` works offline.
-- [ ] A USB drive with the course repository and a filled `lab/node_modules`, for any student whose install failed (see stuck-student steps).
+- [ ] A USB drive with the course repository and an npm cache for each laptop platform in the room, for any student whose install failed. Next.js ships a different native binary per platform, so build each cache on that platform: `npm ci --cache ./npm-cache-<platform>` on Windows x64, macOS arm64, and Linux x64. See the [stuck-student steps](stuck-student.md).
 - [ ] Tera: chapters 2 to 6 unlocked for today, and a primary trainer set on the session so certificates issue.
 - [ ] Rules of engagement printed and placed on each table.
 
