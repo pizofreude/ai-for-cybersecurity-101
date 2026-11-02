@@ -1,0 +1,6 @@
+# Shell scripts and hooks must keep LF endings to run on macOS, Linux, and Git Bash
+* text=auto eol=lf
+*.pdf binary
+*.png binary
+*.jpg binary
+*.woff2 binary
