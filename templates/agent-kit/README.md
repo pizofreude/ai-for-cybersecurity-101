@@ -6,6 +6,11 @@ Files you copy into your own repository so your coding agent works inside securi
 |---|---|
 | [SECURITY-RULES.md](SECURITY-RULES.md) | Rules the agent reads every session: secrets, access control, input and output, AI features, dependencies, commands |
 | [claude/settings.json](claude/settings.json) | Claude Code permission deny and ask lists |
+| [claude/CLAUDE.md](claude/CLAUDE.md) | Section appended to your `CLAUDE.md` that imports the rules |
+| [cursor/cursorignore](cursor/cursorignore) | Lines merged into your `.cursorignore` |
+| [cursor/security.mdc.header](cursor/security.mdc.header) | Front matter for the always-on Cursor rule built from the rules file |
+| [codex/AGENTS.section.md](codex/AGENTS.section.md) | Section appended to your `AGENTS.md`, followed by the rules |
+| [install.sh](install.sh) | Copies or merges the files above into your repository without overwriting anything |
 
 ## What the deny list does and does not do
 
