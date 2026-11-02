@@ -92,12 +92,16 @@ if (!contractOnly) {
       ...slide.points,
       ...slide.prompts.map((p) => p.text),
       ...slide.commands,
-      ...slide.sources.map((s) => s.href),
     ];
     for (const value of shared) {
       const v = normalize(value);
       if (!normalizedHtml.includes(v)) fail(`Site is missing ${slide.id} value: ${v.slice(0, 80)}`);
       if (!normalizedNotes.includes(v)) fail(`Notes are missing ${slide.id} value: ${v.slice(0, 80)}`);
+    }
+    // Source URLs live in href attributes on the site and as text in the notes.
+    for (const { href } of slide.sources) {
+      if (!html.includes(`href="${href}"`)) fail(`Site is missing ${slide.id} source link: ${href}`);
+      if (!normalizedNotes.includes(href)) fail(`Notes are missing ${slide.id} source: ${href}`);
     }
   }
   if (failures.length === before) pass("Site and speaker notes carry every contract value");
