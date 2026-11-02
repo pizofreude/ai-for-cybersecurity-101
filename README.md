@@ -23,6 +23,21 @@ Students leave with:
 
 Frameworks: OWASP Top 10:2025, OWASP LLM Top 10 2026, OWASP Agentic Top 10 2026, NIST SP 800-63B-4, and the Malaysian PDPA Data Breach Notification guideline.
 
+## Scope and sources
+
+The accepted scope, chapter design, decisions D1 to D7, and every source are in [docs/course-scope-proposal.md](docs/course-scope-proposal.md).
+
+## Repository setup
+
+Enable the secret gate once per clone. It needs [gitleaks](https://github.com/gitleaks/gitleaks#installing) installed.
+
+```bash
+sh scripts/install-hooks.sh
+sh scripts/check-secret-hook.sh
+```
+
+The second command checks that the gate blocks a planted fake key.
+
 ## Legal boundary
 
 The lab app in `lab/` is deliberately vulnerable.
