@@ -41,6 +41,15 @@ The workflow runs four checks on every push:
 Commit, push, and open the Actions tab. Fix anything red, or record why it is a false positive.
 Dependabot then opens pull requests when a dependency needs an update.
 
+The CI gate runs after a push. Add the local gate too, so problems stop before the commit:
+
+```bash
+sh templates/agent-kit/install.sh ../my-app claude --hooks
+```
+
+The [agent security kit](../templates/agent-kit/README.md) hooks run gitleaks on every commit and block a new dependency until you have checked it and listed it in `.vetted-packages.txt`.
+Claude Code users: run `/ship-review` on your staged changes before each commit.
+
 ## Step 2: Publish SECURITY.md (3 min)
 
 Copy [templates/SECURITY.md](../templates/SECURITY.md) to the root of your repository.

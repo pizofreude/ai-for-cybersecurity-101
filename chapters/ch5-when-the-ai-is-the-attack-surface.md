@@ -81,8 +81,15 @@ A leaked AI key, or a chatbot with no per-user limit, turns into a bill.
 
 ## Exercise: install the agent kit (5 min)
 
-Follow [the agent security kit instructions](../templates/agent-kit/README.md) for your agent: Claude Code, Cursor, or Codex.
-It adds a security rules file the agent reads every session and a permission deny list.
+From the root of this course repository, install the kit into your own app's repository:
+
+```bash
+sh templates/agent-kit/install.sh ../my-app claude
+```
+
+Replace `../my-app` with your app's path, and `claude` with `cursor`, `codex`, or `all`.
+It adds a security rules file the agent reads every session, a permission deny list where the agent supports one, and a pre-commit review prompt.
+The per-agent steps are in [the agent security kit instructions](../templates/agent-kit/README.md). Restart your agent after installing.
 
 Test it in your own repository:
 
