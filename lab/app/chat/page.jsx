@@ -22,7 +22,7 @@ export default function Chat() {
     const data = await res.json();
     setBusy(false);
     setMessages((prev) => [...prev, res.ok
-      ? { from: `KopiBot (${data.model})`, text: data.reply }
+      ? { from: `KopiBot (${data.model})`, html: data.reply_html }
       : { from: 'error', text: data.error }]);
   }
 
@@ -33,7 +33,9 @@ export default function Chat() {
       {messages.map((m, i) => (
         <div key={i} className="card">
           <strong>{m.from}</strong>
-          <p style={{ whiteSpace: 'pre-wrap' }}>{m.text}</p>
+          {m.html !== undefined
+            ? <p dangerouslySetInnerHTML={{ __html: m.html }} />
+            : <p style={{ whiteSpace: 'pre-wrap' }}>{m.text}</p>}
         </div>
       ))}
       <form onSubmit={onSubmit} className="stack" style={{ maxWidth: 'none', gridTemplateColumns: '1fr auto' }}>
