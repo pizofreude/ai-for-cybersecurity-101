@@ -78,6 +78,9 @@ if (run('chapters')) {
     if (fm.review !== expectedReview) fail(`chapters/${file}: review is "${fm.review}", expected "${expectedReview}"`);
     if (n === 1 && minutes !== PREWORK_MIN) fail(`chapters/${file}: pre-work is ${minutes} min, expected ${PREWORK_MIN}`);
     if (n > 1) inSession += minutes;
+    const text = readFileSync(path.join(dir, file), 'utf8');
+    const stepMinutes = [...text.matchAll(/^##+ .*\((\d+) min[^)]*\)\s*$/gm)].reduce((sum, m) => sum + Number(m[1]), 0);
+    if (stepMinutes !== minutes) fail(`chapters/${file}: step headings add up to ${stepMinutes} min, duration_min is ${minutes}`);
     if (fm.summary && fm.summary.length > 200) fail(`chapters/${file}: summary is ${fm.summary.length} characters, keep it under 200`);
   }
   if (files.length === 6 && inSession !== SESSION_MIN) fail(`chapters: CH2-CH6 plus the ${BREAK_MIN}-min break total ${inSession} min, expected ${SESSION_MIN}`);
