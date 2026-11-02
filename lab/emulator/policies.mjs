@@ -13,8 +13,9 @@ export const policies = {
 
   // create policy "own or public notes" on notes for select using (auth.uid() = owner_id or is_public);
   // create policy "insert own notes" on notes for insert with check (auth.uid() = owner_id);
+  // RLS was switched off while debugging "notes not showing up" and never switched back on.
   notes: {
-    rls: true,
+    rls: false,
     select: (row, auth) => row.owner_id === auth.uid || Boolean(row.is_public),
     insert: (row, auth) => row.owner_id === auth.uid,
   },
