@@ -1,8 +1,8 @@
 // One command to rebuild the lab: keys in .env.local, schema, and seed data.
 //   npm run reset                    restore seed data, keep keys
 //   npm run reset -- --rotate-keys   also generate new keys
-//   npm run reset -- --code          also restore the lab code (and every flag) to the last commit.
-//                                    Your changes are saved with git stash first: get them back with git stash pop.
+//   npm run reset -- --code          restore the lab code to the vulnerable baseline, so every flag is open again,
+//                                    then rotate keys and restore data. Uncommitted changes go to git stash first.
 import { execFileSync } from 'node:child_process';
 import { randomBytes, scryptSync } from 'node:crypto';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
@@ -55,15 +55,29 @@ function insertAll(db, table, rows) {
   }
 }
 
+// Restores lab/ to the vulnerable baseline (origin/main, or main without a remote), even when fixes were committed.
+// Uncommitted work goes to git stash first. Commits are never touched.
 function restoreCode() {
-  const git = (...gitArgs) => execFileSync('git', gitArgs, { cwd: labRoot, encoding: 'utf8' }).trim();
-  if (!git('status', '--porcelain', '--', '.')) {
-    console.log('Lab code already matches the last commit.');
-    return;
+  const git = (...gitArgs) => execFileSync('git', gitArgs, { cwd: labRoot, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+  const hasRef = (ref) => {
+    try {
+      git('rev-parse', '--verify', '--quiet', ref);
+      return true;
+    } catch {
+      return false;
+    }
+  };
+  const baseline = hasRef('origin/main') ? 'origin/main' : 'main';
+  if (git('status', '--porcelain', '--', '.')) {
+    git('stash', 'push', '--include-untracked', '-m', `lab work saved by npm run reset ${new Date().toISOString()}`, '--', '.');
+    console.log('Your uncommitted lab changes are in git stash: "git stash pop" brings them back.');
   }
-  git('stash', 'push', '--include-untracked', '-m', `lab work saved by npm run reset ${new Date().toISOString()}`, '--', '.');
-  console.log('Lab code restored. Your changes are in git stash: run "git stash pop" to get them back.');
-  console.log('Restart npm run dev so the emulator reloads its policies.');
+  git('restore', `--source=${baseline}`, '--staged', '--worktree', '--', '.');
+  console.log(`Lab code restored from ${baseline}: every flag is open again. Your commits are untouched.`);
+  // Run the restored reset script, so keys and data match the restored code (F1 needs its public key back).
+  execFileSync(process.execPath, [path.join(labRoot, 'scripts', 'reset.mjs'), '--rotate-keys'], { cwd: labRoot, stdio: 'inherit' });
+  console.log('Restart npm run dev so the app and the emulator load the restored code and keys.');
+  process.exit(0);
 }
 
 if (args.has('--code')) restoreCode();
