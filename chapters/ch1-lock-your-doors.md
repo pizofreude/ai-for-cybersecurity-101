@@ -80,7 +80,7 @@ On Windows, run every command in this course in Git Bash.
 The lab app is LabShop, a small coffee shop. It is **deliberately vulnerable** and runs on your laptop only.
 
 ```bash
-git clone {{REPO_URL}} ai-for-cybersecurity-101
+git clone https://github.com/pizofreude/ai-for-cybersecurity-101.git
 cd ai-for-cybersecurity-101/lab
 npm ci
 npm run dev
