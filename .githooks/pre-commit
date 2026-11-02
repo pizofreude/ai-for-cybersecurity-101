@@ -1,0 +1,16 @@
+#!/bin/sh
+# Block any commit whose staged changes contain a secret.
+# Enable once per clone: sh scripts/install-hooks.sh
+
+if ! command -v gitleaks >/dev/null 2>&1; then
+  echo "pre-commit: gitleaks is not installed, so the secret scan cannot run." >&2
+  echo "pre-commit: install it (https://github.com/gitleaks/gitleaks#installing), then commit again." >&2
+  exit 1
+fi
+
+if ! gitleaks git --pre-commit --staged --redact --no-banner --verbose; then
+  echo "" >&2
+  echo "pre-commit: gitleaks found a secret in the staged changes. Commit blocked." >&2
+  echo "pre-commit: remove it from the file, rotate the key if it was ever shared, then commit again." >&2
+  exit 1
+fi
