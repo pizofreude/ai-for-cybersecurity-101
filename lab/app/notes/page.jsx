@@ -48,7 +48,7 @@ export default function Notes() {
       <form onSubmit={onSubmit} className="stack">
         <input name="title" placeholder="Title" required />
         <textarea name="body" placeholder="Write something" rows={3} required />
-        <label><input type="checkbox" name="is_public" style={{ width: 'auto' }} /> Public</label>
+        <label className="check"><input type="checkbox" name="is_public" /> Public</label>
         <button type="submit">Save note</button>
       </form>
       {notes.map((note) => (

@@ -28,4 +28,7 @@ button { padding: 8px 14px; border: 1px solid var(--accent); background: var(--a
 .muted { color: var(--muted); }
 .error { color: var(--warn-bg); }
 .stack { display: grid; gap: 12px; max-width: 420px; }
+.row { display: grid; gap: 12px; grid-template-columns: 1fr auto; margin-bottom: 12px; }
+.pre { white-space: pre-wrap; }
+.check input { width: auto; }
 .card { border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; margin: 10px 0; background: #fff; }

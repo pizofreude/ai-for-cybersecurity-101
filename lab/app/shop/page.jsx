@@ -21,7 +21,7 @@ export default function Shop() {
   return (
     <>
       <h1>Shop</h1>
-      <form onSubmit={onSearch} className="stack" style={{ maxWidth: 'none', gridTemplateColumns: '1fr auto' }}>
+      <form onSubmit={onSearch} className="row">
         <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search products" />
         <button type="submit">Search</button>
       </form>

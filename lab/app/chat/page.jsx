@@ -35,10 +35,10 @@ export default function Chat() {
           <strong>{m.from}</strong>
           {m.html !== undefined
             ? <p dangerouslySetInnerHTML={{ __html: m.html }} />
-            : <p style={{ whiteSpace: 'pre-wrap' }}>{m.text}</p>}
+            : <p className="pre">{m.text}</p>}
         </div>
       ))}
-      <form onSubmit={onSubmit} className="stack" style={{ maxWidth: 'none', gridTemplateColumns: '1fr auto' }}>
+      <form onSubmit={onSubmit} className="row">
         <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Ask about products or reviews" />
         <button type="submit" disabled={busy}>{busy ? '...' : 'Send'}</button>
       </form>
