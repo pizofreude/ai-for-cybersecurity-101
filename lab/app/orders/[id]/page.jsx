@@ -26,6 +26,7 @@ export default function OrderDetail({ params }) {
         <p>Total: RM {(order.amount_cents / 100).toFixed(2)}</p>
         <p>Ship to: {order.ship_address}</p>
       </div>
+      <p className="muted">LabPay confirms payment by calling <code>POST /api/webhooks/payment</code>.</p>
     </>
   );
 }
