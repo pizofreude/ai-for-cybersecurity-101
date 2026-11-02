@@ -6,6 +6,7 @@ import { getBrowserClient } from '@/lib/supabase-browser';
 
 const links = [
   { href: '/', label: 'Home' },
+  { href: '/admin', label: 'Admin' },
 ];
 
 export default function Nav() {
