@@ -1,0 +1,22 @@
+#!/bin/sh
+# Agent security kit pre-commit hook: secret scan, then the new-dependency check.
+# Installed by: sh templates/agent-kit/install.sh <repo> <agent> --hooks
+
+if ! command -v gitleaks >/dev/null 2>&1; then
+  echo "pre-commit: gitleaks is not installed, so the secret scan cannot run." >&2
+  echo "pre-commit: install it (https://github.com/gitleaks/gitleaks#installing), then commit again." >&2
+  exit 1
+fi
+
+if ! gitleaks git --pre-commit --staged --redact --no-banner --verbose; then
+  echo "" >&2
+  echo "pre-commit: gitleaks found a secret in the staged changes. Commit blocked." >&2
+  echo "pre-commit: remove it, rotate the key if it was ever shared, then commit again." >&2
+  exit 1
+fi
+
+if command -v node >/dev/null 2>&1; then
+  node "$(dirname "$0")/check-new-packages.mjs" || exit 1
+else
+  echo "pre-commit: node not found, skipped the new-dependency check." >&2
+fi

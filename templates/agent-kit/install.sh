@@ -1,7 +1,7 @@
 #!/bin/sh
 # Installs the agent security kit into your own repository.
 #
-#   sh templates/agent-kit/install.sh <path-to-your-repo> <claude|cursor|codex|all>
+#   sh templates/agent-kit/install.sh <path-to-your-repo> <claude|cursor|codex|all> [--hooks]
 #
 # It never overwrites a file you already have. When a file exists, it appends what is
 # missing, or prints what to merge by hand.
@@ -10,9 +10,10 @@ set -eu
 KIT=$(cd "$(dirname "$0")" && pwd)
 TARGET=${1:-}
 AGENT=${2:-}
+HOOKS=${3:-}
 
 if [ -z "$TARGET" ] || [ -z "$AGENT" ]; then
-  echo "usage: sh templates/agent-kit/install.sh <path-to-your-repo> <claude|cursor|codex|all>" >&2
+  echo "usage: sh templates/agent-kit/install.sh <path-to-your-repo> <claude|cursor|codex|all> [--hooks]" >&2
   exit 2
 fi
 if [ ! -d "$TARGET/.git" ]; then
@@ -89,6 +90,21 @@ if [ "$AGENT" = codex ] || [ "$AGENT" = all ]; then
   { cat "$KIT/codex/AGENTS.section.md"; printf '\n'; sed 's/^#/##/' "$KIT/SECURITY-RULES.md"; } > "$tmp"
   append_block_once "<!-- agent-security-kit -->" "$TARGET/AGENTS.md" "$tmp"
   rm -f "$tmp"
+fi
+
+if [ "$HOOKS" = "--hooks" ]; then
+  echo "Pre-commit hooks:"
+  existing=$(git -C "$TARGET" config core.hooksPath || true)
+  if [ -n "$existing" ] && [ "$existing" != ".githooks" ]; then
+    echo "  kept   core.hooksPath=$existing. Copy $KIT/hooks/ into it by hand."
+  else
+    copy_once "$KIT/hooks/pre-commit" "$TARGET/.githooks/pre-commit"
+    copy_once "$KIT/hooks/check-new-packages.mjs" "$TARGET/.githooks/check-new-packages.mjs"
+    chmod +x "$TARGET/.githooks/pre-commit"
+    git -C "$TARGET" config core.hooksPath .githooks
+    echo "  set    core.hooksPath=.githooks"
+  fi
+  copy_once "$KIT/hooks/vetted-packages.txt" "$TARGET/.vetted-packages.txt"
 fi
 
 echo "Done. Review the changes with: git -C \"$TARGET\" status"

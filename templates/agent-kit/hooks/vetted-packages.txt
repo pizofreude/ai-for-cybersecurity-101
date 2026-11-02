@@ -1,0 +1,7 @@
+# Packages a person has checked on npmjs.com: exact name, real repository, real downloads, real history.
+# One package per line. Add a reason and the date after a #.
+# The pre-commit hook blocks any new dependency that is not listed here.
+next  # framework
+react  # framework
+react-dom  # framework
+@supabase/supabase-js  # official Supabase client
