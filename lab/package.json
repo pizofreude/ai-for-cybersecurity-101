@@ -1,0 +1,23 @@
+{
+  "name": "ai4cyber-lab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Deliberately vulnerable training app for AI for Cybersecurity 101. Localhost only. Never deploy.",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "setup": "node scripts/reset.mjs",
+    "reset": "node scripts/reset.mjs",
+    "dev": "node scripts/dev.mjs",
+    "emulator": "node --disable-warning=ExperimentalWarning emulator/server.mjs",
+    "check": "node scripts/check-flags.mjs"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "2.118.0",
+    "next": "16.4.4",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  }
+}
