@@ -1,3 +1,4 @@
+import { connection } from 'next/server';
 import Nav from '@/components/Nav';
 import './globals.css';
 
@@ -6,7 +7,9 @@ export const metadata = {
   description: 'Training app for AI for Cybersecurity 101. Localhost only.',
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  // Render every page per request, so each response carries a fresh CSP nonce.
+  await connection();
   return (
     <html lang="en">
       <body>
