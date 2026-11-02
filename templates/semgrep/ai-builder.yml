@@ -1,0 +1,40 @@
+# Semgrep rules for the failures AI-built apps ship most often.
+# Copy to .semgrep/ai-builder.yml in your repository. The security workflow runs it with p/default.
+# Written for AI for Cybersecurity 101: on 2026-11-02, p/default, p/react, p/nextjs, and p/javascript
+# found none of the LabShop flags these rules catch.
+
+rules:
+  - id: ai-builder.dangerously-set-inner-html
+    languages: [javascript, typescript]
+    severity: ERROR
+    message: >-
+      Dynamic HTML goes through dangerouslySetInnerHTML. If any part comes from a user or a model,
+      it runs as code in every visitor's browser (OWASP A05, LLM10). Render it as text, or sanitise
+      it with a vetted library such as DOMPurify.
+    patterns:
+      - pattern: '<$EL dangerouslySetInnerHTML={{__html: $X}} />'
+      - pattern-not: '<$EL dangerouslySetInnerHTML={{__html: "..."}} />'
+
+  - id: ai-builder.sql-built-from-template
+    languages: [javascript, typescript]
+    severity: ERROR
+    message: >-
+      SQL is built with a template literal that interpolates a value. Input can rewrite the query
+      (OWASP A05). Pass values as bound parameters instead.
+    pattern-regex: '`\s*(?i:select|insert|update|delete|with)\b[^`]*\$\{'
+
+  - id: ai-builder.secret-with-public-prefix
+    languages: [javascript, typescript]
+    severity: ERROR
+    message: >-
+      A secret-looking variable has a public prefix, so the bundler ships its value to every visitor.
+      Remove the prefix, read it only in server code, and rotate the key.
+    pattern-regex: '\b(NEXT_PUBLIC|VITE|EXPO_PUBLIC)_[A-Z0-9_]*(SECRET|SERVICE_ROLE|SERVICE_KEY|PRIVATE|PASSWORD)[A-Z0-9_]*'
+
+  - id: ai-builder.cors-allow-any-origin
+    languages: [javascript, typescript]
+    severity: WARNING
+    message: >-
+      CORS allows every origin. Any website can read this API's responses from a visitor's browser
+      (OWASP A02). List the exact origins that need access.
+    pattern-regex: 'Access-Control-Allow-Origin[''"]?\s*[:,]\s*[''"]\*[''"]'

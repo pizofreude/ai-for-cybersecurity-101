@@ -28,6 +28,7 @@ Copy two files from this course repository into your own:
 |---|---|
 | [templates/github/workflows/security.yml](../templates/github/workflows/security.yml) | `.github/workflows/security.yml` |
 | [templates/github/dependabot.yml](../templates/github/dependabot.yml) | `.github/dependabot.yml` |
+| [templates/semgrep/ai-builder.yml](../templates/semgrep/ai-builder.yml) | `.semgrep/ai-builder.yml` |
 
 The workflow runs four checks on every push:
 
@@ -36,7 +37,10 @@ The workflow runs four checks on every push:
 | gitleaks | Secrets in the commits being pushed |
 | `npm audit` | Dependencies with known vulnerabilities |
 | OSV-Scanner | Known vulnerabilities across every lockfile in the repository |
-| Semgrep | Risky code patterns such as injection and unsafe HTML |
+| Semgrep | Risky code patterns. The course rules add unsafe HTML rendering, SQL built from template strings, secrets with a public prefix, and CORS open to every origin |
+
+Scanners miss things. Semgrep's default rules found none of LabShop's flags, which is why the course rules exist. A green run is a floor, not proof.
+When a finding is safe, suppress it on that line with `// nosemgrep: <rule-id> -- <reason>`. Never suppress without a reason.
 
 Commit, push, and open the Actions tab. Fix anything red, or record why it is a false positive.
 Dependabot then opens pull requests when a dependency needs an update.

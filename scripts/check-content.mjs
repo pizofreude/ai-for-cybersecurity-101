@@ -30,6 +30,7 @@ const REQUIRED_FILES = [
   'worksheets/breach-runbook.md',
   'templates/SECURITY.md',
   'templates/github/workflows/security.yml',
+  'templates/semgrep/ai-builder.yml',
   'templates/agent-kit/SECURITY-RULES.md',
   'templates/agent-kit/claude/settings.json',
 ];

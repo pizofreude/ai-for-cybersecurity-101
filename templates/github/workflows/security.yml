@@ -79,5 +79,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - name: Fail on findings from the default ruleset
-        run: semgrep scan --config p/default --error --metrics off
+      # p/default plus the course rules in .semgrep/ai-builder.yml (copy from templates/semgrep/).
+      # The course rules catch the AI-built-app failures that p/default missed in the LabShop lab.
+      - name: Fail on findings
+        run: semgrep scan --config p/default --config .semgrep/ai-builder.yml --error --metrics off
