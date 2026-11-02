@@ -6,6 +6,7 @@ import { getBrowserClient } from '@/lib/supabase-browser';
 
 const links = [
   { href: '/', label: 'Home' },
+  { href: '/shop', label: 'Shop' },
   { href: '/notes', label: 'My notes' },
   { href: '/orders', label: 'My orders' },
   { href: '/admin', label: 'Admin' },
