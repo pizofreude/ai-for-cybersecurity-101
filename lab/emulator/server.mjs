@@ -16,7 +16,7 @@ const PORT = 54321;
 const db = openDb();
 
 const cors = {
-  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Origin': '*', // nosemgrep: ai-builder.cors-allow-any-origin -- the emulator mimics Supabase, whose API is called from any origin with an API key
   'Access-Control-Allow-Methods': 'GET, POST, PATCH, DELETE, OPTIONS',
   'Access-Control-Allow-Headers': 'authorization, apikey, content-type, prefer, accept, accept-profile, content-profile, x-client-info, range',
 };
@@ -220,6 +220,7 @@ async function handleRest(req, res, url, auth) {
 
   if (req.method === 'GET') {
     const where = whereClause(url, cols, table);
+    // nosemgrep: ai-builder.sql-built-from-template -- table and columns are checked against PRAGMA table_info, values are bound
     const rows = db.prepare(`SELECT * FROM "${table}" ${where.sql} ${orderClause(url, cols, table)}`).all(...where.params)
       .map(fromDb)
       .filter((row) => allowed(table, 'select', row, auth));
@@ -235,6 +236,7 @@ async function handleRest(req, res, url, auth) {
       const keys = Object.keys(row);
       keys.forEach((key) => checkColumn(cols, table, key));
       if (!allowed(table, 'insert', row, auth)) throw restError(403, '42501', `new row violates row-level security policy for table "${table}"`);
+      // nosemgrep: ai-builder.sql-built-from-template -- identifiers checked by checkColumn, values are bound
       const sql = `INSERT INTO "${table}" (${keys.map((k) => `"${k}"`).join(', ')}) VALUES (${keys.map(() => '?').join(', ')}) RETURNING *`;
       inserted.push(fromDb(db.prepare(sql).get(...writableValues(row, keys))));
     }
@@ -248,11 +250,14 @@ async function handleRest(req, res, url, auth) {
     const keys = Object.keys(body);
     keys.forEach((key) => checkColumn(cols, table, key));
     const where = whereClause(url, cols, table);
+    // nosemgrep: ai-builder.sql-built-from-template -- table checked by columnsOf, filters are bound
     const targets = db.prepare(`SELECT rowid AS _rowid, * FROM "${table}" ${where.sql}`).all(...where.params)
       .filter(({ _rowid, ...row }) => allowed(table, op, fromDb(row), auth));
     const changed = targets.map(({ _rowid }) => {
       const sql = op === 'update'
+        // nosemgrep: ai-builder.sql-built-from-template -- identifiers checked by checkColumn, values are bound
         ? `UPDATE "${table}" SET ${keys.map((k) => `"${k}" = ?`).join(', ')} WHERE rowid = ? RETURNING *`
+        // nosemgrep: ai-builder.sql-built-from-template -- table checked by columnsOf, rowid is bound
         : `DELETE FROM "${table}" WHERE rowid = ? RETURNING *`;
       return fromDb(db.prepare(sql).get(...writableValues(body, keys), _rowid));
     });

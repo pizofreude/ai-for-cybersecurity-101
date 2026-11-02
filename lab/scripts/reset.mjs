@@ -51,6 +51,7 @@ function hashPassword(password) {
 function insertAll(db, table, rows) {
   for (const row of rows) {
     const cols = Object.keys(row);
+    // nosemgrep: ai-builder.sql-built-from-template -- table and columns come from seed.mjs, never from input
     db.prepare(`INSERT INTO ${table} (${cols.join(', ')}) VALUES (${cols.map(() => '?').join(', ')})`).run(...Object.values(row));
   }
 }
