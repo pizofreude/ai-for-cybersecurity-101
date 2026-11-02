@@ -283,7 +283,11 @@ async function handleQuery(req, res, auth) {
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://${HOST}:${PORT}`);
   try {
-    if (req.method === 'OPTIONS') return send(res, 204);
+    if (req.method === 'OPTIONS') {
+      // Allow whatever headers the client asks for, as Supabase does (supabase-js adds x-supabase-api-version).
+      res.writeHead(204, { ...cors, 'Access-Control-Allow-Headers': req.headers['access-control-request-headers'] ?? cors['Access-Control-Allow-Headers'] });
+      return res.end();
+    }
     if (url.pathname === '/health') return send(res, 200, { ok: true });
     if (url.pathname.startsWith('/auth/v1/')) return await handleAuth(req, res, url);
     const auth = authContext(req);
