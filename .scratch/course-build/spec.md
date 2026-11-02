@@ -1,6 +1,6 @@
 Ame project: ai-for-cybersecurity-101
 Plan: ame/Project Resources/plans/ai-for-cybersecurity-101-course-build-active.md (Phases 2-8)
-Status: ready-for-agent
+Status: resolved
 
 # Spec - AI for Cybersecurity 101 course build
 
@@ -155,3 +155,11 @@ One repository holds everything a trainer needs to run the course and everything
 - Computer Crimes Act 1997 s.3 sets the attack boundary. CH2 states it before any lab.
 - PDPA DBN deadlines come from the official guideline PDF: para 6.1 (72 hours to the Commissioner), para 9.1 (7 days to data subjects), para 5.3 (more than 1,000 data subjects is significant scale).
 - The emulator choice changes how D2 "Next.js + Supabase" is delivered, not the decision itself. The client code is real supabase-js. The own-app repeat in CH4 uses each student's real Supabase project.
+
+## Comments
+
+2026-11-02 - Built to this spec. Changes from the spec:
+- Semgrep `p/default` missed every lab flag, so the course ships `templates/semgrep/ai-builder.yml` and the CI template runs it.
+- `reset -- --code` restores from `origin/main` and rewrites keys, so committed fixes reopen too (found by the dry run).
+- The kit command is `/ship-review`, because `/security-review` is a built-in Claude Code command.
+Open, owner-only: GitHub repository (P1-T5), Tera editor line types (P0-T10), visual aid deploy (P5-T5), Tera course creation and publish (P8-T4, P8-T5).

@@ -23,6 +23,27 @@ Students leave with:
 
 Frameworks: OWASP Top 10:2025, OWASP LLM Top 10 2026, OWASP Agentic Top 10 2026, NIST SP 800-63B-4, and the Malaysian PDPA Data Breach Notification guideline.
 
+## What is here
+
+| Directory | Contents |
+|---|---|
+| [lab/](lab/README.md) | LabShop, the deliberately vulnerable lab app, with nine flags, a reset script, and the flag checker. The `lab-fixed` branch holds one fix commit per flag |
+| [chapters/](chapters/README.md) | Tera chapter text for CH1 to CH6, plus the form sheet to paste into Tera |
+| [cards/](cards/README.md) | Attacker and fixer prompt cards for every flag, and the threat model card |
+| [worksheets/](worksheets/) | Hygiene checklist, threat model, pre-deploy checklist, breach runbook |
+| [templates/](templates/) | `SECURITY.md`, the CI security workflow, Dependabot, Semgrep rules, and the [agent security kit](templates/agent-kit/README.md) |
+| [presentation/](presentation/README.md) | Astro visual aid and Zenith speaker notes |
+| [facilitator/](facilitator/run-sheet.md) | Run sheet, room setup, approval rubric, stuck-student steps, dry-run script |
+| [docs/](docs/) | Scope proposal, install timing, dry run record, security gate record |
+
+## Checks
+
+```bash
+node scripts/check-content.mjs     # chapters, cards, files, links
+node scripts/tera-form.mjs --check # Tera form sheet matches the chapters
+bash facilitator/dry-run.sh        # full student path on a fresh clone
+```
+
 ## Scope and sources
 
 The accepted scope, chapter design, decisions D1 to D7, and every source are in [docs/course-scope-proposal.md](docs/course-scope-proposal.md).
