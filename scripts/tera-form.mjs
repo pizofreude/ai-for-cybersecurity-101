@@ -56,7 +56,7 @@ for (const c of chapters) {
 lines.push(
   '## Before pasting into Tera',
   '',
-  '- The course repository is private. Before class, make it public or add each student as a reader, so the CH1 clone works.',
+  '- The course repository is public at https://github.com/pizofreude/ai-for-cybersecurity-101, so students clone it in CH1 without an account.',
   '- Map the Markdown to the Tera step editor line types (plan task P0-T10, needs an admin view).',
   '- Chapter 1 opens on enrolment, so it carries the pre-work. Chapters 2 to 6 open on class day.',
   '- Chapter 6 uses approval review. Set a primary trainer on the session so the completion certificate issues.',
