@@ -5,6 +5,7 @@ summary: Find a secret key shipped to every visitor, scan your git history for l
 block: Block 2
 duration_min: 35
 deliverable: Clean gitleaks run on full history, an agent deny list for .env, and any leaked key rotated
+tera_deliverable: text notes
 review: self-check
 ---
 

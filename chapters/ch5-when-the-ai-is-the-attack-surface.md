@@ -5,6 +5,7 @@ summary: Trick LabShop's chatbot into leaking its hidden instructions, stop mode
 block: Block 4
 duration_min: 35
 deliverable: Prompt-injection flag F8 captured and closed, F9 closed, and the agent security kit installed in your own repository
+tera_deliverable: text notes
 review: self-check
 ---
 

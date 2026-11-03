@@ -5,6 +5,7 @@ summary: Add a security workflow that runs on every push, publish a SECURITY.md,
 block: Block 5
 duration_min: 25
 deliverable: SECURITY.md, a passing CI security workflow run, and a one-page breach runbook, all in your own repository
+tera_deliverable: git repo url
 review: approval
 ---
 

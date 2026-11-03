@@ -5,6 +5,7 @@ summary: How one missing setting exposed 1.5 million tokens, the legal line you 
 block: Block 1
 duration_min: 25
 deliverable: One-page threat model of your own app - assets, entry points, top 3 fears
+tera_deliverable: file upload
 review: self-check
 ---
 

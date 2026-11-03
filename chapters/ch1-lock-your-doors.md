@@ -5,6 +5,7 @@ summary: Pre-work. Put passkeys or MFA on every account that can take down your 
 block: Before the session
 duration_min: 20
 deliverable: Completed hygiene checklist, plus the last line of npm run check from the lab app
+tera_deliverable: text notes
 review: self-check
 ---
 

@@ -5,6 +5,7 @@ summary: Break LabShop four ways from the OWASP Top 10:2025, fix each hole with 
 block: Block 3
 duration_min: 50
 deliverable: Lab flags F2-F7 closed with curl proof, plus two checks run on your own app with before and after proof
+tera_deliverable: text notes
 review: self-check
 ---
 

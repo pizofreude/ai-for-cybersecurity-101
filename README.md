@@ -29,6 +29,7 @@ Frameworks: OWASP Top 10:2025, OWASP LLM Top 10 2026, OWASP Agentic Top 10 2026,
 |---|---|
 | [lab/](lab/README.md) | LabShop, the deliberately vulnerable lab app, with nine flags, a reset script, and the flag checker. The `lab-fixed` branch holds one fix commit per flag |
 | [chapters/](chapters/README.md) | Tera chapter text for CH1 to CH6, plus the form sheet to paste into Tera |
+| [tera/](tera/) | Each chapter as a Tera lesson, generated from chapters/ by `scripts/tera-lesson.mjs`. Paste into the LESSON field |
 | [cards/](cards/README.md) | Attacker and fixer prompt cards for every flag, and the threat model card |
 | [worksheets/](worksheets/) | Hygiene checklist, threat model, pre-deploy checklist, breach runbook |
 | [templates/](templates/) | `SECURITY.md`, the CI security workflow, Dependabot, Semgrep rules, and the [agent security kit](templates/agent-kit/README.md) |
@@ -41,6 +42,7 @@ Frameworks: OWASP Top 10:2025, OWASP LLM Top 10 2026, OWASP Agentic Top 10 2026,
 ```bash
 node scripts/check-content.mjs     # chapters, cards, files, links
 node scripts/tera-form.mjs --check # Tera form sheet matches the chapters
+node scripts/tera-lesson.mjs --check # Tera lesson files in tera/ match the chapters
 bash facilitator/dry-run.sh        # full student path on a fresh clone
 ```
 

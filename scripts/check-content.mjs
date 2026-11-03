@@ -4,7 +4,7 @@
 //   node scripts/check-content.mjs chapters links   run selected checks
 //
 // Checks:
-//   chapters   six chapter files, Tera form fields present, review values, 20 min pre-work, 180 min in session
+//   chapters   six chapter files, Tera form fields present, review and Tera deliverable values, 20 min pre-work, 180 min in session
 //   cards      an attacker prompt, fixer prompt, and proof for every lab flag, plus the threat model card
 //   files      every worksheet and template the chapters promise exists
 //   links      every relative Markdown link in the course resolves to a file
@@ -21,7 +21,9 @@ const fail = (message) => errors.push(message);
 const BREAK_MIN = 10;
 const SESSION_MIN = 180;
 const PREWORK_MIN = 20;
-const FIELDS = ['chapter', 'title', 'summary', 'block', 'duration_min', 'deliverable', 'review'];
+const FIELDS = ['chapter', 'title', 'summary', 'block', 'duration_min', 'deliverable', 'tera_deliverable', 'review'];
+// The values of the Tera chapter editor's Deliverable field (P0-T10).
+const TERA_DELIVERABLES = ['git repo url', 'deployed app url', 'text notes', 'file upload', 'none'];
 const FLAGS = ['F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9'];
 const REQUIRED_FILES = [
   'worksheets/hygiene-checklist.md',
@@ -77,6 +79,7 @@ if (run('chapters')) {
     const minutes = Number(fm.duration_min);
     const expectedReview = n === 6 ? 'approval' : 'self-check';
     if (fm.review !== expectedReview) fail(`chapters/${file}: review is "${fm.review}", expected "${expectedReview}"`);
+    if (fm.tera_deliverable && !TERA_DELIVERABLES.includes(fm.tera_deliverable)) fail(`chapters/${file}: tera_deliverable "${fm.tera_deliverable}" is not one of: ${TERA_DELIVERABLES.join(', ')}`);
     if (n === 1 && minutes !== PREWORK_MIN) fail(`chapters/${file}: pre-work is ${minutes} min, expected ${PREWORK_MIN}`);
     if (n > 1) inSession += minutes;
     const text = readFileSync(path.join(dir, file), 'utf8');
