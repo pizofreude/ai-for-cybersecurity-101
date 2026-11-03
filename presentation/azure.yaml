@@ -1,0 +1,11 @@
+# Azure Developer CLI project for the course visual aid. Own resource group and Static Web App, nothing shared.
+#   azd env new <env> --subscription <id> --location eastasia
+#   azd env set AZURE_RESOURCE_GROUP rg-<env>   (created by a subscription owner, you need Contributor on it)
+#   azd up
+name: ai-for-cybersecurity-101
+services:
+  web:
+    project: .
+    language: js
+    host: staticwebapp
+    dist: dist

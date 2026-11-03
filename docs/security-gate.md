@@ -11,7 +11,7 @@ Run on 2026-11-02 against the course repository (`main` and `lab-fixed`) and the
 | Code patterns | Semgrep course rules [ai-builder.yml](../templates/semgrep/ai-builder.yml) | `lab/` on `main` | 6 findings, all planted flags (F1 in two files, F4, F5, F6, F9) |
 | Code patterns | Semgrep course rules | `lab/` on `lab-fixed` | 0 findings |
 | Workflow template | actionlint 1.7.12 | `templates/github/workflows/security.yml` | Pass |
-| Visual aid headers | `presentation/scripts/validate-security.mjs` | `netlify.toml`, `dist/` | 7 of 7 pass |
+| Visual aid headers | `presentation/scripts/validate-security.mjs` | `public/staticwebapp.config.json`, `dist/` | 8 of 8 pass |
 | Visual aid parity | `presentation/scripts/validate-presentation-parity.mjs` | Contract, site, speaker notes | Pass |
 | Content contract | `scripts/check-content.mjs` | Chapters, cards, files, links | Pass |
 

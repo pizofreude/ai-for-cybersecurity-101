@@ -1,10 +1,10 @@
 // Security gate for the built visual aid. Adapted from the AIMTO Security for Vibecoders gate.
-// Reads netlify.toml and dist/ only.
+// Reads dist/ only, including dist/staticwebapp.config.json, the header set Azure Static Web Apps serves.
 import { readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { parseGlobalHeaders } from "./headers.mjs";
+import { globalHeaders, readSwaConfig } from "./headers.mjs";
 
-const config = readFileSync(resolve("netlify.toml"), "utf8");
+const config = readSwaConfig();
 const html = readFileSync(resolve("dist/index.html"), "utf8");
 let failed = false;
 
@@ -17,11 +17,11 @@ function pass(message) {
   console.log(`[PASS] ${message}`);
 }
 
-const headers = parseGlobalHeaders(config);
-if (!headers) {
-  fail("Global Netlify header block is missing");
+if (!config?.globalHeaders) {
+  fail("dist/staticwebapp.config.json is missing, not JSON, or has no globalHeaders. Check public/staticwebapp.config.json");
   process.exit(1);
 }
+const headers = globalHeaders(config);
 
 const requiredHeaders = [
   "content-security-policy",
@@ -75,6 +75,10 @@ const offOrigin = Array.from(html.matchAll(/\s(?:src|href)="(https?:[^"]+)"/g), 
   .filter((url) => !html.includes(`<a href="${url}"`) && !url.startsWith(process.env.PUBLIC_SITE_URL ?? "\u0000"));
 if (offOrigin.length) fail(`Page loads off-origin resources: ${offOrigin.join(", ")}`);
 else pass("Page loads no off-origin resources (external URLs are links only)");
+
+const immutable = config.routes?.find((r) => r.route === "/_astro/*")?.headers?.["Cache-Control"] ?? "";
+if (!/immutable/.test(immutable)) fail("staticwebapp.config.json has no immutable Cache-Control route for /_astro/*");
+else pass("Hashed /_astro/* assets are served immutable");
 
 const favicon = readFileSync(resolve("dist/favicon.svg"), "utf8");
 if (/<script|<foreignObject|\son[a-z]+=|\s(?:xlink:)?href=|\sstyle=/i.test(favicon)) fail("Favicon SVG has an unsafe surface");

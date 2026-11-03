@@ -1,8 +1,17 @@
-// Reads the global ("/*") header block from netlify.toml into { lowercased-name: value }.
-export function parseGlobalHeaders(toml) {
-  const block = toml.match(/\[\[headers\]\]\s*for = "\/\*"\s*\[headers\.values\]([\s\S]*?)(?=\n\[\[headers\]\]|$)/)?.[1];
-  if (!block) return null;
-  return Object.fromEntries(
-    Array.from(block.matchAll(/^\s*([\w-]+)\s*=\s*"([^"]*)"\s*$/gm), ([, key, value]) => [key.toLowerCase(), value]),
-  );
+// Reads the Azure Static Web Apps config, the single source of the visual aid's response headers.
+// public/staticwebapp.config.json is the source. Astro copies it into dist/, which is what Azure serves.
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+
+export function readSwaConfig(file = "dist/staticwebapp.config.json") {
+  try {
+    return JSON.parse(readFileSync(resolve(file), "utf8"));
+  } catch {
+    return null;
+  }
+}
+
+// Returns the global headers as { lowercased-name: value }.
+export function globalHeaders(config) {
+  return Object.fromEntries(Object.entries(config?.globalHeaders ?? {}).map(([key, value]) => [key.toLowerCase(), value]));
 }

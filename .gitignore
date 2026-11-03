@@ -17,7 +17,6 @@ node_modules/
 out/
 .astro/
 dist/
-.netlify/
 .vercel/
 *.tsbuildinfo
 next-env.d.ts
@@ -36,3 +35,4 @@ gitleaks-report.*
 .DS_Store
 Thumbs.db
 .idea/
+.azure/

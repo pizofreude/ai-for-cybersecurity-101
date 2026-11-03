@@ -19,7 +19,7 @@ Navigate with the section rail or `ArrowDown`, `PageDown`, `ArrowUp`, and `PageU
 
 | Gate | Checks |
 |---|---|
-| `scripts/validate-security.mjs` | Header set and CSP in `netlify.toml`, no inline scripts or styles in the build |
+| `scripts/validate-security.mjs` | Header set and CSP in `dist/staticwebapp.config.json`, no inline scripts or styles in the build |
 | `scripts/validate-presentation-parity.mjs` | Contract timing (180 minutes in session), and every title, time, cue, point, prompt, command, and source appears in both the site and the notes |
 
 ## Lineage
