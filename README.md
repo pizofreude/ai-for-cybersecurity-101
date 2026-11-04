@@ -35,7 +35,7 @@ Frameworks: OWASP Top 10:2025, OWASP LLM Top 10 2026, OWASP Agentic Top 10 2026,
 | [templates/](templates/) | `SECURITY.md`, the CI security workflow, Dependabot, Semgrep rules, and the [agent security kit](templates/agent-kit/README.md) |
 | [presentation/](presentation/README.md) | Astro visual aid and Zenith speaker notes |
 | [facilitator/](facilitator/run-sheet.md) | Run sheet, room setup, approval rubric, stuck-student steps, dry-run script |
-| [docs/](docs/) | Scope proposal, install timing, dry run record, security gate record |
+| [docs/](docs/) | Scope proposal, install timing, dry run record, security gate record, [end-to-end test](docs/e2e-test.md) |
 
 ## Checks
 

@@ -15,6 +15,13 @@ It replays the student path with the reference fixes. Result: **every step passe
 
 Restarts cost 6 to 9 seconds each. CH3 (F1) and CH4 (F2, F4) need one each.
 
+## Scripted dry run from GitHub, 2026-11-04
+
+Anonymous clone of https://github.com/pizofreude/ai-for-cybersecurity-101 (`main` at `55c13c4`, `lab-fixed` at `a04c572`), then `bash facilitator/dry-run.sh <dir>` from that clone.
+Result: **every step passed** in 2 min 38 s. `npm ci` took 74 s, restarts 4 to 7 s.
+
+Found: given a work directory that did not exist, the script failed at the first step. It now creates the directory.
+
 ## Overruns found and fixed
 
 | Found | Fix | Rerun |
@@ -31,4 +38,4 @@ The script measures the machine, not the people. Not covered:
 - Room effects: questions, helper load, slow laptops, Wi-Fi.
 - The Claude, Cursor, and Codex agents writing the fixes. The script applies the reference fixes.
 
-Before the first cohort, run one timed pass with a person who has not seen the course: a helper works through CH1 to CH6 with their own agent while someone records the clock time per chapter in the [run sheet](../facilitator/run-sheet.md).
+Before the first cohort, run one timed pass with a person who has not seen the course. Follow the [end-to-end test](e2e-test.md): it covers Tera, the tester's own agent, and the clock time per chapter.

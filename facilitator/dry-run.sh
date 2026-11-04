@@ -7,6 +7,7 @@
 # ports 3000 and 54321 first. Needs bash, git, node, npm, curl. Timings go to dry-run.log.
 REPO=$(cd "$(dirname "$0")/.." && pwd)
 WORK=${1:-$(mktemp -d)}
+mkdir -p "$WORK" || exit 1
 C=$WORK/dry-clone
 LOG=$WORK/dry-run.log
 : > "$LOG"
