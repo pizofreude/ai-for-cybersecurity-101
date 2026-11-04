@@ -7,7 +7,7 @@ Slide = section of the visual aid (`presentation/`). Chapter = Tera chapter.
 
 | Time | Who | Do |
 |---|---|---|
-| 09:15 | Lead trainer | Open the visual aid at the `00` section. Open `presentation/speaker-notes/course-notes.pdf` on a second screen |
+| 09:15 | Lead trainer | Open the visual aid (https://kind-ground-0fdc76e00.3.azurestaticapps.net) at the `00` section. Open `presentation/speaker-notes/course-notes.pdf` on a second screen |
 | 09:15 | Helpers | Run the [room setup](room-setup.md) checklist |
 | 09:30 | Lead trainer | Run `npm run check` in a fresh lab on the trainer laptop. Expect `All flags as expected.` |
 | 09:30 | Lead trainer | In Tera, check that chapters 2 to 6 have unlocked for today |

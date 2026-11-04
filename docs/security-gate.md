@@ -14,6 +14,8 @@ Run on 2026-11-02 against the course repository (`main` and `lab-fixed`) and the
 | Visual aid headers | `presentation/scripts/validate-security.mjs` | `public/staticwebapp.config.json`, `dist/` | 8 of 8 pass |
 | Visual aid parity | `presentation/scripts/validate-presentation-parity.mjs` | Contract, site, speaker notes | Pass |
 | Content contract | `scripts/check-content.mjs` | Chapters, cards, files, links | Pass |
+| Live visual aid headers | `curl` against the deployed site, 2026-11-04 | https://kind-ground-0fdc76e00.3.azurestaticapps.net | 14 of 14 global headers match `staticwebapp.config.json`. `/_astro/*` immutable, HTTP redirects to HTTPS |
+| Live visual aid grade | MDN HTTP Observatory, 2026-11-04 | Same URL | A+, score 145, 12 of 12 tests passed |
 
 ## Finding: default rules miss the lab flags
 
@@ -26,5 +28,4 @@ The lab on `main` stays deliberately vulnerable. Do not add the security workflo
 
 ## Not run
 
-- MDN HTTP Observatory on the visual aid. It needs the deployed URL (plan P5-T5).
-- The security workflow on GitHub Actions. The course repository is not on GitHub yet (plan P1-T5). Every step ran locally with the same tool versions.
+- The security workflow on GitHub Actions. The course repository does not run it, because `lab/` on `main` is deliberately vulnerable. Every step ran locally with the same tool versions.
