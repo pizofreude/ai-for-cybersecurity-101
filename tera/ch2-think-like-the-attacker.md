@@ -79,9 +79,9 @@ Cap: 3 min
 
 Submit in Tera: your one-page threat model (assets, entry points, top 3 fears).
 
-**Self-check**
+**Self-check before you submit**
 
-- [ ] I can state the four rules of engagement.
-- [ ] My threat model names real assets in my app, not generic ones.
-- [ ] Each of my top 3 fears names an entry point.
-- [ ] I know which fear I will test first in CH4.
+- I can state the four rules of engagement.
+- My threat model names real assets in my app, not generic ones.
+- Each of my top 3 fears names an entry point.
+- I know which fear I will test first in CH4.

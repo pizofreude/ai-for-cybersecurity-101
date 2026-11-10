@@ -10,7 +10,7 @@
 // Mapping from the chapter files:
 //   "## ... (N min)" sections      become ### steps in order, with "Cap: N min" when the time is exact.
 //   A timed step titled "Submit"   moves into the Checkpoint, since the Checkpoint is the hand-in.
-//   Deliverable, Self-check, Approval criteria   become the Checkpoint.
+//   Deliverable, Self-check, Approval criteria   become the Checkpoint, with "- [ ]" items as plain bullets.
 //   Other sections                 stay as ## sections, before or after the steps.
 //   Relative links                 become github.com links, because Tera cannot resolve repository paths.
 import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
@@ -54,6 +54,8 @@ function absoluteLinks(text, file) {
 }
 
 const trim = (lines) => lines.join('\n').replace(/^\n+|\n+$/g, '');
+// Tera renders a "- [ ]" task list as disabled checkboxes that nobody can tick, so the Checkpoint lists are plain bullets.
+const plainBullets = (text) => text.replace(/^(\s*)- \[[ xX]\] /gm, '$1- ');
 
 function lesson(file) {
   const text = readFileSync(file, 'utf8').replace(/\r\n/g, '\n');
@@ -75,7 +77,8 @@ function lesson(file) {
       const cap = timed[3].trim() ? '' : `\n\nCap: ${timed[2]} min`;
       steps.push(`### ${title}\n\n${trim(s.lines)}${cap}`);
     } else if (CHECKPOINT.includes(s.heading)) {
-      checkpoint.push(s.heading === 'Deliverable' ? trim(s.lines) : `**${s.heading}**\n\n${trim(s.lines)}`);
+      const label = s.heading === 'Self-check' ? 'Self-check before you submit' : s.heading;
+      checkpoint.push(s.heading === 'Deliverable' ? plainBullets(trim(s.lines)) : `**${label}**\n\n${plainBullets(trim(s.lines))}`);
     } else {
       (steps.length ? after : before).push(s);
     }
@@ -86,6 +89,7 @@ function lesson(file) {
   const parts = [trim(preamble), ...before.map(block), `## Steps\n\n${steps.join('\n\n')}`, ...after.map(block), `## Checkpoint\n\n${checkpoint.join('\n\n')}`];
   const output = `${parts.filter(Boolean).join('\n\n')}\n`;
   if (/\]\((?!https?:|mailto:|#)/.test(output)) errors.push(`${path.basename(file)}: a relative link survived`);
+  if (/^\s*- \[[ xX]\] /m.test(output)) errors.push(`${path.basename(file)}: a "- [ ]" task list survived outside the Checkpoint. Tera shows it as checkboxes nobody can tick`);
   return output;
 }
 

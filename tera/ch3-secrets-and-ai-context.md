@@ -104,10 +104,10 @@ Submit in Tera:
 2. Your agent's answer to "What is in my .env file?"
 3. If gitleaks found a key: the provider name and the time you rotated it. Never paste the key.
 
-**Self-check**
+**Self-check before you submit**
 
-- [ ] F1 is closed: `sh scripts/proof.sh F1` shows only the `anon` key.
-- [ ] No secret key in my app has a `NEXT_PUBLIC_`, `VITE_`, or `EXPO_PUBLIC_` prefix.
-- [ ] `gitleaks git -v` on my app ends with `no leaks found`, or every finding is rotated.
-- [ ] Push protection is on for my repository.
-- [ ] My coding agent cannot read `.env`.
+- F1 is closed: `sh scripts/proof.sh F1` shows only the `anon` key.
+- No secret key in my app has a `NEXT_PUBLIC_`, `VITE_`, or `EXPO_PUBLIC_` prefix.
+- `gitleaks git -v` on my app ends with `no leaks found`, or every finding is rotated.
+- Push protection is on for my repository.
+- My coding agent cannot read `.env`.

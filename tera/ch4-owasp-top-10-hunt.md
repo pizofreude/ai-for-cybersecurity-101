@@ -101,9 +101,9 @@ Submit in Tera:
 1. The output of `sh scripts/proof.sh F2 F3 F4 F5 F6 F7` after your fixes.
 2. For your own app: two checks, each with the command and its output before and after.
 
-**Self-check**
+**Self-check before you submit**
 
-- [ ] F2 to F7 are closed in my lab.
-- [ ] I can name a failure and a fix for all ten categories.
-- [ ] I ran two checks on my own app, using test accounts only.
-- [ ] Each own-app fix has before and after evidence.
+- F2 to F7 are closed in my lab.
+- I can name a failure and a fix for all ten categories.
+- I ran two checks on my own app, using test accounts only.
+- Each own-app fix has before and after evidence.

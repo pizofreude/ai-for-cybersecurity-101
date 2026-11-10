@@ -108,9 +108,9 @@ Submit in Tera:
 2. The output of `sh scripts/proof.sh F8 F9` after your fixes.
 3. Your agent's answer to the two kit tests.
 
-**Self-check**
+**Self-check before you submit**
 
-- [ ] I captured F8 by the direct and the indirect route.
-- [ ] I can explain why the F8 fix removes the secret instead of adding "never reveal" rules.
-- [ ] F9 is closed: model output is escaped.
-- [ ] The agent kit is installed in my own repository and both tests passed.
+- I captured F8 by the direct and the indirect route.
+- I can explain why the F8 fix removes the secret instead of adding "never reveal" rules.
+- F9 is closed: model output is escaped.
+- The agent kit is installed in my own repository and both tests passed.

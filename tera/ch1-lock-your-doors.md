@@ -103,12 +103,12 @@ Submit in Tera:
 1. Your hygiene checklist score: how many builder accounts have a passkey or MFA, out of how many.
 2. The last line of `npm run check`.
 
-**Self-check**
+**Self-check before you submit**
 
-- [ ] My email account has a passkey or MFA.
-- [ ] GitHub and my database provider have a passkey or MFA.
-- [ ] My recovery codes are in my password manager.
-- [ ] The lab app opens at http://127.0.0.1:3000 and I can sign in as Alice.
-- [ ] `npm run check` ends with `All flags as expected.`
+- My email account has a passkey or MFA.
+- GitHub and my database provider have a passkey or MFA.
+- My recovery codes are in my password manager.
+- The lab app opens at http://127.0.0.1:3000 and I can sign in as Alice.
+- `npm run check` ends with `All flags as expected.`
 
 Stuck on the lab install? Post the error in the class chat. A helper answers before class day.

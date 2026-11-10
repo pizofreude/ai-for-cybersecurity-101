@@ -109,9 +109,9 @@ Submit in Tera:
 
 The trainer approves when all of these hold:
 
-- [ ] `SECURITY.md` is in the repository root and names a contact that reaches you.
-- [ ] `security.yml` ran on a push and passed, or each failure has a written reason.
-- [ ] The runbook names who does each phase, lists every key to rotate with where to rotate it, and states the 72-hour and 7-day PDPA deadlines.
-- [ ] Nothing submitted contains a secret.
+- `SECURITY.md` is in the repository root and names a contact that reaches you.
+- `security.yml` ran on a push and passed, or each failure has a written reason.
+- The runbook names who does each phase, lists every key to rotate with where to rotate it, and states the 72-hour and 7-day PDPA deadlines.
+- Nothing submitted contains a secret.
 
 If something is missing, the trainer replies with the gap. Fix it and resubmit.
