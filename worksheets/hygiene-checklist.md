@@ -49,11 +49,13 @@ Password manager I use: ____________________
 
 ## 4. Lab ready
 
+Fill this in last. CH1 Step 4 installs the tools, and Step 5 starts the lab.
+
 | Check | Me |
 |---|---|
 | `node -v` prints 22.13 or later | [ ] |
 | `git --version`, `gitleaks version`, and `gh --version` all work | [ ] |
-| The lab opens at http://127.0.0.1:3000 and I can sign in as Alice | [ ] |
+| The lab opens at http://127.0.0.1:3000 and I can sign in as `alice@lab.test` with password `alice-lab-pass` (a fake test account in the lab) | [ ] |
 | `npm run check` ends with `All flags as expected.` | [ ] |
 
 ## 5. Optional
